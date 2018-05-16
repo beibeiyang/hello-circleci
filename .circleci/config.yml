@@ -1,0 +1,30 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.6.5-stretch-browsers
+    environment:
+      SF_ACCOUNT: account
+      SF_DATABASE: databasename
+      SF_SCHEMA: schemaname
+      SF_WAREHOUSE: warehoursename
+      SF_ROLE: rolename
+    steps:
+      - checkout
+      - run:
+          name: Install Python dependencies
+          command: |
+            sudo pip3 install -r requirements.txt
+      - run:
+          name: pwd
+          command: pwd
+      - run:
+          name: list
+          command: ls -al
+      - run:
+          name: List the Snowflake user
+          command: echo $SF_USER
+      - run:
+          name: Query snowflake
+          command: |
+            python3 sf.py
